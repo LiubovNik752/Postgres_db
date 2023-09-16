@@ -32,7 +32,7 @@ try:
         cursor.execute(
             """UPDATE public.users SET first_name = 'new_name', last_name = 'new_surname' WHERE id = 777;"""
         )
-        print("[INFO] User was successfully updated", sep='\n')
+        print("[INFO] User was successfully updated")
 
 
     with connection.cursor() as cursor:
