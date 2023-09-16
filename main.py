@@ -34,7 +34,6 @@ try:
         )
         print("[INFO] User was successfully updated")
 
-
     with connection.cursor() as cursor:
         cursor.execute(
             """SELECT id, first_name, last_name FROM public.users where id = 777;"""
@@ -46,7 +45,6 @@ try:
             """DELETE FROM public.users WHERE id = 777;"""
         )
         print("User with id = 777 was successfully deleted")
-
 
 except Exception as ex:
     print("[INFO] Error while working with PostgreSQL")
