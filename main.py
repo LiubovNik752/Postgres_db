@@ -53,7 +53,6 @@ except Exception as ex:
 
 finally:
     if connection:
-        cursor.close()
         connection.close()
         print("[INFO] PostgreSQL connection closed")
 
