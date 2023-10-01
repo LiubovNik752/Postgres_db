@@ -1,43 +1,18 @@
-import psycopg2
-from conf import *
+
 
 
 class Test_crud_user():
-    def test_create_user(self):
-        try:
-            connection = psycopg2.connect(
-                host = host,
-                user = user,
-                password = password,
-                database = db_name,
-                port = port
+    def test_create_user(self, connection):
+
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """INSERT INTO public.users(id, first_name, last_name)
+	        VALUES (777, 'test_name', 'test_surname');"""
             )
-            connection.autocommit = True
-            print("Connection open")
-
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    """INSERT INTO public.users(id, first_name, last_name)
-	            VALUES (777, 'test_name', 'test_surname');"""
-                )
-                print("User was successfully created")
-
-        finally:
-            if connection:
-                connection.close()
-                print("PostgreSQL connection closed")
+            print("User was successfully created")
 
 
-    def test_get_user(self):
-        try:
-            connection = psycopg2.connect(
-                host = host,
-                user = user,
-                password = password,
-                database = db_name,
-                port = port
-            )
-            connection.autocommit = True
+    def test_get_user(self, connection):
 
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -45,21 +20,8 @@ class Test_crud_user():
                 )
                 assert cursor.fetchone() == (777, 'test_name', 'test_surname')
 
-        finally:
-            if connection:
-                connection.close()
-                print("PostgreSQL connection closed")
 
-    def test_update_user(self):
-        try:
-            connection = psycopg2.connect(
-                host = host,
-                user = user,
-                password = password,
-                database = db_name,
-                port = port
-            )
-            connection.autocommit = True
+    def test_update_user(self, connection):
 
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -73,21 +35,8 @@ class Test_crud_user():
                 )
                 assert cursor.fetchone() == (777, 'new_name', 'new_surname')
 
-        finally:
-            if connection:
-                connection.close()
-            print("PostgreSQL connection closed")
 
-    def test_delete_user(self):
-        try:
-            connection = psycopg2.connect(
-                host = host,
-                user = user,
-                password = password,
-                database = db_name,
-                port = port
-            )
-            connection.autocommit = True
+    def test_delete_user(self, connection):
 
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -95,8 +44,4 @@ class Test_crud_user():
                 )
                 assert cursor.fetchone() is None
 
-        finally:
-            if connection:
-                connection.close()
-            print("PostgreSQL connection closed")
 
